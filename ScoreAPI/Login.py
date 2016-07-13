@@ -5,12 +5,13 @@ import urllib
 from PIL import Image,ImageEnhance,ImageFilter,ImageDraw
 import pytesser
 import re
+import socket
 
-
-# 将cookies绑定到一个opener cookie由cookielib自动管理
 cookie = cookielib.CookieJar()
 handler = urllib2.HTTPCookieProcessor(cookie)
 opener = urllib2.build_opener(handler)
+
+# 将cookies绑定到一个opener cookie由cookielib自动管理
 
 def captchaRecognize(img):
     #无限中值过滤噪点
@@ -40,12 +41,17 @@ def captchaRecognize(img):
     return captcha
 
 def loginRequest(username,password,headers):
+    #socket.setdefaulttimeout(2)
+
     # 验证码地址和post地址
     CaptchaUrl = "http://jwxt.ecjtu.jx.cn/servlet/code.servlet"
     PostUrl = 'http://jwxt.ecjtu.jx.cn/stuMag/Login_login.action'
-    picture = opener.open(CaptchaUrl).read()
+    try:
+        captchaRequest = opener.open(CaptchaUrl,timeout = 2)
+    except urllib2.HTTPError, e:
+        return False
     # 用openr访问验证码地址,获取cookie
-
+    picture = captchaRequest.read()
     local = open('cod.jpg', 'wb')
     local.write(picture)
     local.close()
@@ -62,17 +68,16 @@ def loginRequest(username,password,headers):
     # 生成post数据 ?key1=value1&key2=value2的形式
     request = urllib2.Request(PostUrl, data, headers)
     # 构造request请求
-    # 打开保存的验证码图片 输入
     try:
         response = opener.open(request)
         result = response.read()
-        if result != 'success':
-            loginRequest(PostUrl,CaptchaUrl,headers)
+        if result == 'success':
+            return True
         else:
-            print result
+            return False
         # 打印登录后的页面
     except urllib2.HTTPError, e:
-        print e.code
+        return False
 
 def readUrl(url):
     response = opener.open(url)
