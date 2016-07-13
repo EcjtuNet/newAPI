@@ -2,7 +2,6 @@
 import re
 import requests
 from subprocess import Popen
-import PictureRecognize
 import Login
 import ScoreManager
 import json
