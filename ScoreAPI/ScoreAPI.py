@@ -4,8 +4,8 @@ import infoQuery
 import jsonData
 import config
 
-if (len(config.username)<14) and (len(config.password)<6):
-    jsonData.failedData(401,'用户名或密码错误')
-loginRequest.request()
-scoreInfoList = infoQuery.getScoreInfo(2015,1)
+loginRequest.request(config.username,config.password,config.headers)
+
+scoreInfoList = infoQuery.getScoreInfo(config.year,config.term)
+
 jsonData.successData(scoreInfoList)

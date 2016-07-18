@@ -4,6 +4,8 @@ import cgi
 # 用户名和密码
 username = '2015211001000622'
 password = 'a13479249166+'
+year = 2015
+term =2
 
 #头文件
 headers = {
@@ -23,3 +25,6 @@ if form.has_key('username') and form.has_key('password'):
     password = form['password'].value
     year = form['year'].value
     term = form['term'].value
+
+if (len(username)<14) and (len(password)<6):
+    jsonData.failedData(401,'用户名或密码错误')

@@ -5,15 +5,13 @@ import urllib
 import socket
 import captchaProcess
 import jsonData
-import config
 
 # 将cookies绑定到一个opener cookie由cookielib自动管理
 cookie = cookielib.CookieJar()
 handler = urllib2.HTTPCookieProcessor(cookie)
 opener = urllib2.build_opener(handler)
 
-def request():
-    #socket.setdefaulttimeout(2)
+def request(username,password,headers):
     #post地址
     PostUrl = 'http://jwxt.ecjtu.jx.cn/stuMag/Login_login.action'
     # 保存验证码到本地
@@ -26,14 +24,14 @@ def request():
     if captcha == 0:
         jsonData.failedData(500,'验证码识别失败')
     postData = {
-            'UserName':config.username,
-            'Password': config.password,
+            'UserName':username,
+            'Password': password,
             'code':captcha
     }
     # 生成post数据 ?key1=value1&key2=value2的形式
     data = urllib.urlencode(postData)
     # 构造request请求
-    request = urllib2.Request(PostUrl, data, config.headers)
+    request = urllib2.Request(PostUrl,data,headers)
     try:
         response = opener.open(request)
         result = response.read()

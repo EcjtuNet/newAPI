@@ -6,6 +6,6 @@ import config
 
 loginRequest.request(config.username,config.password,config.headers)
 
-classInfoList = infoQuery.getClassInfo(config.year,config.term)
+scoreInfoList = infoQuery.getExamInfo(config.year,config.term,config.username)
 
-jsonData.successData(classInfoList)
+jsonData.successData(scoreInfoList)
