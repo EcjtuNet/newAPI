@@ -6,7 +6,7 @@ def failedData(statementCode,msg):
         'msg':msg
     }
     jsonData = json.dumps(data)
-    print jsonData
+    return jsonData
     exit()
 
 def successData(result):
@@ -16,5 +16,5 @@ def successData(result):
         'result':result
     }
     jsonData = json.dumps(data)
-    print jsonData
+    return jsonData
     exit()
