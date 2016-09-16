@@ -37,5 +37,5 @@ def captchaRecognize(captchaImg):
         return captcha
 
 def openImg(imgName):
-    img = Image.open('cod.jpg')
+    img = Image.open(username+'code.jpg')
     return img

@@ -15,10 +15,10 @@ def request(username,password,headers):
     #post地址
     PostUrl = 'http://jwxt.ecjtu.jx.cn/stuMag/Login_login.action'
     # 保存验证码到本地
-    if saveCaptcha()==False:
+    if saveCaptcha(username)==False:
         jsonData.failedData(404)
     #识别验证码
-    img = captchaProcess.openImg('cod.jpg')
+    img = captchaProcess.openImg(username+'code.jpg')
     captchaImg = captchaProcess.pictureProcess(img)
     captcha = captchaProcess.captchaRecognize(captchaImg)
     if captcha == 0:
@@ -45,11 +45,11 @@ def request(username,password,headers):
     return True
 
 # 将验证码存储于本地，返回是否存储成功
-def saveCaptcha():
+def saveCaptcha(username):
     CaptchaUrl = "http://jwxt.ecjtu.jx.cn/servlet/code.servlet"
     picture = readUrl(CaptchaUrl)
     # 用openr访问验证码地址,获取cookie
-    local = open('cod.jpg', 'wb')
+    local = open(username+'code.jpg', 'wb')
     local.write(picture)
     local.close()
     return True
