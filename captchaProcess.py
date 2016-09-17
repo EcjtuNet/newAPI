@@ -1,7 +1,8 @@
 #coding:utf-8
+from pytesser import pytesser
 from PIL import Image,ImageEnhance,ImageFilter,ImageDraw
-import pytesser
 import re
+
 # 处理图片便于进行识别，返回处理后的图片
 def pictureProcess(img):
     #无限中值过滤噪点
