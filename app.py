@@ -18,6 +18,10 @@ headers = {
 
 app  =  flask.Flask(__name__)
 
+@app.route("/")
+def hello():
+    return "Hello World!"
+
 @app.route('/API/ClassQuery',methods=['POST'])
 def getClassJsonData():
 
@@ -61,4 +65,4 @@ def getScoreJsonData():
 	return jsonData.successData(scoreInfoList)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', use_reloader=False)
+    app.run(host='0.0.0.0', use_reloader=False, debug=True)
